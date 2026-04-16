@@ -1,23 +1,67 @@
-import json
-import os
-from distutils.dir_util import remove_tree
-
-from Tools.scripts.verify_ensurepip_wheels import GITHUB_ACTIONS
-from fontTools.misc.cython import returns
+# import os
+# from dataclasses import field
+# from distutils.dir_util import remove_tree
+#
+# from Tools.scripts.verify_ensurepip_wheels import GITHUB_ACTIONS
+# from fontTools.misc.cython import returns
 
 
 # get current working directory path
 # cwd_path = os.getcwd()
 
 
-# def read_data(file_name, field):
-#     """
-#     Reads json file and returns sequential data.
-#     :param file_name: (str), name of json file
-#     :param field: (str), field of a dict to return
-#     :return: (list, string),
-#     """
-#     file_path = os.path.join(cwd_path, file_name)
+# -----------------------------------------------------------------------
+# Dnešní cvičení ...
+import json
+
+
+
+def read_data(file_name, field):
+    with open(file_name, mode="r") as object:
+        data = json.load(object)
+        if field in data.keys():
+            return data[field]
+        else:
+            return None
+
+
+
+def linear_search(sekvence, hledane_cislo):
+    slovnik = {}
+    pozice = []
+    pocet = 0
+    for index, cislo in enumerate(sekvence):
+        if cislo == hledane_cislo:
+            pozice.append(index)
+            pocet += 1
+    slovnik["positions"] = pozice
+    slovnik["count"] = pocet
+
+
+
+
+
+
+
+def main():
+    print(read_data("sequential.json", "dna_sequence"))
+
+
+if __name__ == '__main__':
+    main()
+
+# ----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 
 
 # def read_data(file_name, key):
@@ -101,13 +145,13 @@ found = None
 
 
 
-while True:
-    midle = (L + R) // 2
-
-    if hodnoty[midle] > cislo:
-        R = midle - 1
-    elif hodnoty[midle] < cislo:
-        L = midle
+# while True:
+#     midle = (L + R) // 2
+#
+#     if hodnoty[midle] > cislo:
+#         R = midle - 1
+#     elif hodnoty[midle] < cislo:
+#         L = midle
 
 
 
@@ -115,7 +159,7 @@ while True:
 
 from generators import ordered_sequence
 
-for
+# for
 
 
 
@@ -128,9 +172,3 @@ for
 
 
 
-# def main():
-#     pass
-#
-#
-# if __name__ == '__main__':
-#     main()
