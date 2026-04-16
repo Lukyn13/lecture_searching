@@ -26,16 +26,17 @@ def read_data(file_name, field):
 
 
 
-def linear_search(sekvence, hledane_cislo):
+def linear_search(sekvence_cisel, hledane_cislo):
     slovnik = {}
     pozice = []
     pocet = 0
-    for index, cislo in enumerate(sekvence):
+    for index, cislo in enumerate(sekvence_cisel):
         if cislo == hledane_cislo:
             pozice.append(index)
             pocet += 1
     slovnik["positions"] = pozice
     slovnik["count"] = pocet
+    return slovnik
 
 
 
@@ -44,7 +45,9 @@ def linear_search(sekvence, hledane_cislo):
 
 
 def main():
-    print(read_data("sequential.json", "dna_sequence"))
+    # print(read_data("sequential.json", "dna_sequence"))
+    sekvence = read_data("sequential.json", "unordered_numbers")
+    # print(linear_search(sekvence, 2))
 
 
 if __name__ == '__main__':
