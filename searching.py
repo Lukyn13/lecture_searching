@@ -16,6 +16,7 @@
 import json
 
 
+
 def read_data(file_name, field):
     with open(file_name, mode="r") as object:
         data = json.load(object)
@@ -23,6 +24,7 @@ def read_data(file_name, field):
             return data[field]
         else:
             return None
+
 
 
 def linear_search(sekvence_cisel, hledane_cislo):
@@ -38,11 +40,13 @@ def linear_search(sekvence_cisel, hledane_cislo):
     return slovnik
 
 
+
 # def binary_search(seznam_cisel, hledane_cislo):
 #     for index, cislo in enumerate(seznam_cisel):
 #         if cislo == hledane_cislo:
 #             return index
 #     return None
+
 
 
 def binary_search(seznam_cisel, hledane_cislo):
@@ -60,37 +64,95 @@ def binary_search(seznam_cisel, hledane_cislo):
     # delka = len(seznam_cisel)
     # stred = seznam_cisel[(delka // 2) + 1]
 
+    # 1. iterace: n/2
+    # 2. iterace: n/4
+    # 3. iterace: n/8
+    # k. iterace: n/2^k = 1
+
+    # k = log2(n) ... nejhorší scénář
+    # nejlepší scénář: O(n) = 1 ... tedy konstantní
+
 
 
 import time
 
-numbers = [4, 8, 15, 16, 23, 42, 55, 78, 91, 120]
-target = 78
-start = time.perf_counter()
-for number in numbers:
-    if number == target:
-        break
-end = time.perf_counter()
-duration = end - start
-print(f"Měření trvalo {duration:.8f} s")
+# numbers = [4, 8, 15, 16, 23, 42, 55, 78, 91, 120]
+# target = 78
+# start = time.perf_counter()     # první použití → start stopky
+# for number in numbers:
+#     if number == target:
+#         break
+# end = time.perf_counter()       # druhé použití → stop stopky
+# duration = end - start          # celkový čas je doba mezi tím
+# print(f"Měření trvalo {duration:.8f} s")
 
 
 
 import matplotlib.pyplot as plt
 
-sizes = [100, 500, 1000, 5000, 10000]
-times = [0.00001, 0.00003, 0.00006, 0.00031, 0.00067]
-plt.plot(sizes, times)
-plt.xlabel("Velikost vstupu")
-plt.ylabel("Čas [s]")
-plt.title("Ukázkový graf měření")
-plt.show()
+# sizes = [100, 500, 1000, 5000, 10000]
+# times = [0.00001, 0.00003, 0.00006, 0.00031, 0.00067]
+# plt.plot(sizes, times)
+# plt.xlabel("Velikost vstupu")
+# plt.ylabel("Čas [s]")
+# plt.title("Ukázkový graf měření")
+# plt.show()
 
 
 
 from generators import unordered_sequence
 from generators import ordered_sequence
 from generators import dna_sequence
+
+
+sizes = [100, 500, 1000, 5000, 10000]
+hledane = 5
+pocet_opakovani = 100
+linear_times = []
+binary_times = []
+
+for size in sizes:
+    # doplnění dobrovolného úkolu pro průměrování časů
+    linear_times_sub = []
+    linear_times_sub_pocet = 0
+    binary_times_sub = []
+    binary_times_sub_pocet = 0
+    for i in range(pocet_opakovani):
+        neserazene = unordered_sequence(size)
+        serazene = ordered_sequence(size)
+
+        start = time.perf_counter()
+        slovnik = linear_search(neserazene, hledane)
+        end = time.perf_counter()
+        doba_trvani_lin = end - start
+        linear_times_sub.append(doba_trvani_lin)
+        linear_times_sub_pocet += 1
+
+        start = time.perf_counter()
+        idx = binary_search(serazene, hledane)
+        end = time.perf_counter()
+        doba_trvani_bin = end - start
+        binary_times_sub.append(doba_trvani_bin)
+        binary_times_sub_pocet += 1
+
+    prumer_lin = sum(linear_times_sub) / linear_times_sub_pocet
+    prumer_bin = sum(binary_times_sub) / binary_times_sub_pocet
+    linear_times.append(prumer_lin)
+    binary_times.append(prumer_bin)
+
+
+plt.plot(sizes, linear_times)
+plt.xlabel("Velikost vstupu")
+plt.ylabel("Čas [s]")
+plt.title("Lineární")
+plt.show()
+
+plt.plot(sizes, binary_times)
+plt.xlabel("Velikost vstupu")
+plt.ylabel("Čas [s]")
+plt.title("Binární")
+plt.show()
+
 
 
 
