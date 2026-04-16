@@ -12,8 +12,8 @@
 
 # -----------------------------------------------------------------------
 # Dnešní cvičení ...
-import json
 
+import json
 
 
 def read_data(file_name, field):
@@ -23,7 +23,6 @@ def read_data(file_name, field):
             return data[field]
         else:
             return None
-
 
 
 def linear_search(sekvence_cisel, hledane_cislo):
@@ -39,6 +38,61 @@ def linear_search(sekvence_cisel, hledane_cislo):
     return slovnik
 
 
+# def binary_search(seznam_cisel, hledane_cislo):
+#     for index, cislo in enumerate(seznam_cisel):
+#         if cislo == hledane_cislo:
+#             return index
+#     return None
+
+
+def binary_search(seznam_cisel, hledane_cislo):
+    levy_kraj = 0
+    pravy_kraj = len(seznam_cisel) - 1          # indexuju od 0
+    while levy_kraj <= pravy_kraj:
+        stredovy_index = (levy_kraj + pravy_kraj) // 2
+        if seznam_cisel[stredovy_index] == hledane_cislo:
+            return stredovy_index
+        elif seznam_cisel[stredovy_index] < hledane_cislo:
+            levy_kraj = stredovy_index + 1      # musím přičíst 1, abych se posunul blíže
+        elif seznam_cisel[stredovy_index] > hledane_cislo:
+            pravy_kraj = stredovy_index - 1
+    return None
+    # delka = len(seznam_cisel)
+    # stred = seznam_cisel[(delka // 2) + 1]
+
+
+
+import time
+
+numbers = [4, 8, 15, 16, 23, 42, 55, 78, 91, 120]
+target = 78
+start = time.perf_counter()
+for number in numbers:
+    if number == target:
+        break
+end = time.perf_counter()
+duration = end - start
+print(f"Měření trvalo {duration:.8f} s")
+
+
+
+import matplotlib.pyplot as plt
+
+sizes = [100, 500, 1000, 5000, 10000]
+times = [0.00001, 0.00003, 0.00006, 0.00031, 0.00067]
+plt.plot(sizes, times)
+plt.xlabel("Velikost vstupu")
+plt.ylabel("Čas [s]")
+plt.title("Ukázkový graf měření")
+plt.show()
+
+
+
+from generators import unordered_sequence
+from generators import ordered_sequence
+from generators import dna_sequence
+
+
 
 
 
@@ -46,12 +100,17 @@ def linear_search(sekvence_cisel, hledane_cislo):
 
 def main():
     # print(read_data("sequential.json", "dna_sequence"))
-    sekvence = read_data("sequential.json", "unordered_numbers")
-    # print(linear_search(sekvence, 2))
+    sekvence = read_data("sequential.json", "ordered_numbers")
+    vyhledat_cislo = -10
+    print(linear_search(sekvence, vyhledat_cislo))
+    # serazena_sekvence = sorted(sekvence)
+    serazena_sekvence = read_data("sequential.json", "ordered_numbers")
+    print(binary_search(serazena_sekvence, vyhledat_cislo))
 
 
 if __name__ == '__main__':
     main()
+
 
 # ----------------------------------------------------------------------------
 
@@ -129,12 +188,12 @@ if __name__ == '__main__':
 
 # pro serazena cisla:
 
-hodnoty = [6, 12, 17, 23, 38, 45, 77, 84, 90]
-delka = len(hodnoty)
-cislo = 45
-L = 0
-R = delka - 1
-found = None
+# hodnoty = [6, 12, 17, 23, 38, 45, 77, 84, 90]
+# delka = len(hodnoty)
+# cislo = 45
+# L = 0
+# R = delka - 1
+# found = None
 # middle = (L + R) / 2
 # while R >= L:
 #     if middle != cislo:
@@ -160,7 +219,7 @@ found = None
 
 
 
-from generators import ordered_sequence
+# from generators import ordered_sequence
 
 # for
 
